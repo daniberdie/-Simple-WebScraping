@@ -1,0 +1,22 @@
+#!/usr/bin/python
+
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+
+url = 'https://www.packtpub.com/packt/offers/free-learning/'
+
+#Obtindre codi html de la pagina.
+Pagina = urlopen(url)
+html = Pagina.read()
+Pagina.close()
+
+#Parsejar el codi html per tal de obtindre el títol del llibre.
+soup = BeautifulSoup(html, "html.parser")
+titol = soup.find_all("div", "dotd-title")
+contingut = titol[0]
+resultat = ("Títol: " + contingut.text.strip() + "\n")
+print (resultat)
+
+fitxer = open('Daily book.txt', 'w')
+fitxer.write(resultat)
+fitxer.close()
